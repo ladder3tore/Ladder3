@@ -1,0 +1,24 @@
+<include src="rapid" plugin="hobo"/>
+
+<include src="taglibs/auto/rapid/cards"/>
+<include src="taglibs/auto/rapid/pages"/>
+<include src="taglibs/auto/rapid/forms"/>
+
+<set-theme name="clean"/>
+
+<def tag="app-name">Ladder3</def>
+
+<def tag="main-nav">
+  <navigation class="main-nav" merge-attrs param="default">
+    <nav-item href="#{base_url}/">Home</nav-item>
+    <% models = Hobo::Model.all_models.select { |m| linkable?( m, :index) } -%>
+    <% nav_names = { 'Releases' => 'News', 'Issues' => 'Report a Building Issue' } %>
+    <repeat with="&models">
+      <nav-item>
+        <ht key="#{this.name.tableize}.nav_item">
+          <%= nav_names[this.view_hints.model_name_plural]  ? nav_names[this.view_hints.model_name_plural] : this.view_hints.model_name_plural %>
+        </ht>
+      </nav-item>
+    </repeat>
+  </navigation>
+</def>
